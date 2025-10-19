@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Mail, Linkedin, Github, Twitter, Send, Rocket, ArrowRight } from "lucide-react";
+import { Mail, Linkedin, Github, Twitter, Send, Rocket, ArrowRight, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -116,7 +116,7 @@ export default function Contact() {
                 <div>
                   <div className="text-sm text-gray-400">Email</div>
                   <div className="text-white font-medium">
-                    hello@catalyxsolutions.com
+                    catalyxstartup@gmail.com
                   </div>
                 </div>
               </a>
@@ -128,10 +128,8 @@ export default function Contact() {
               </h4>
               <div className="flex space-x-4">
                 {[
-                  { icon: Linkedin, href: "#" },
-                  { icon: Github, href: "#" },
-                  { icon: Twitter, href: "#" },
-                  { icon: Mail, href: "#" },
+                  { icon: Linkedin, href: "https://www.linkedin.com/in/catalyx-solutions/" },
+                  { icon: Facebook, href: "https://www.facebook.com/share/1JGAWmw7Ps/" },
                 ].map((social, index) => (
                   <a
                     key={index}

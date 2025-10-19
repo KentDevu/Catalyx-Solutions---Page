@@ -17,7 +17,7 @@ export default function Team() {
     {
       name: "Eunile Jan Apo",
       role: "CEO & Founder",
-      funFact: "Tomby Lover",
+      funFact: "nature lover",
       initials: "EJ",
       image: eunille,
       gradient: "from-[#7B2FF7] to-[#9D5CFF]",
@@ -39,7 +39,7 @@ export default function Team() {
     {
       name: "Ashley Kier Ferreol",
       role: "CMO & Co-Founder",
-      funFact: "Clout Chaser",
+      funFact: "i like thrifting",
       initials: "AK",
       image: ashley,
       gradient: "from-[#FF6B6B] to-[#FF8E53]",
