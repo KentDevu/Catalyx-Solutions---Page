@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import BackgroundAnimation from "./BackgroundAnimation";
-import AnimatedLogo from "./AnimatedLogo";
+import LottieAnimation from "./LottieAnimation";
+// import animationData from "../assets/Programming Computer-animation.json";
+// import animationData from "../assets/Website-animation.json";
+import animationData from "../assets/rocket-animation-v2.json";
 
 export default function Hero() {
   return (
@@ -13,7 +15,17 @@ export default function Hero() {
       className="relative flex items-center justify-center overflow-hidden section"
       style={{ minHeight: 'calc(100vh - 5rem)' }}
     >
-      <BackgroundAnimation />
+      <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden">
+        <div className="w-[1000px] h-[1000px] max-w-none">
+          <LottieAnimation
+        animationData={animationData}
+        loop={true}
+        autoplay={true}
+        className="w-full h-full"
+        style={{ width: "100%", height: "100%" }}
+          />
+        </div>
+      </div>
 
       <div className="site-container relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -63,7 +75,18 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.5 }}
             className="hidden lg:flex items-center justify-center -translate-y-10 xl:-translate-y-20"
           >
-            <AnimatedLogo />
+            {/* Larger responsive Lottie container */}
+            <div className="w-full flex justify-center">
+              <div className="w-[200px] h-[200px] md:w-[360px] md:h-[360px] lg:w-[440px] lg:h-[440px] xl:w-[600px] xl:h-[600px]">
+                <LottieAnimation
+                  animationData={animationData}
+                  loop={true}
+                  autoplay={true}
+                  className="w-full h-full"
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </div>
+            </div>
           </motion.div>
           <div className="flex flex-col">
                         <motion.div
