@@ -76,7 +76,7 @@ export default function Mission() {
                   <h3 className="text-3xl font-bold text-white">Vision</h3>
                 </div>
                 <p className="text-gray-300 text-lg leading-relaxed">
-                  To be the driving force behind the world's next big digital
+                  To be the driving force behind the world&apos;s next big digital
                   ideas. We envision a future where innovation knows no bounds
                   and technology serves as the ultimate catalyst for change.
                 </p>

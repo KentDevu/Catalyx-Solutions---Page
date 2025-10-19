@@ -76,7 +76,7 @@ export default function Hero() {
                 size="lg"
                 className="bg-gradient-to-r from-[#7B2FF7] to-[#00C6FF] hover:shadow-2xl hover:shadow-[#7B2FF7]/50 transition-all duration-300 text-lg px-8 py-6 group w-full sm:w-auto"
               >
-                Let's Build Together
+                Let&apos;s Build Together
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button

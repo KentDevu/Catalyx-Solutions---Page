@@ -65,7 +65,7 @@ export default function Projects() {
             </span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Discover how we've transformed ideas into impactful digital
+            Discover how we&apos;ve transformed ideas into impactful digital
             solutions
           </p>
         </motion.div>

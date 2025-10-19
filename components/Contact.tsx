@@ -37,7 +37,7 @@ export default function Contact() {
             </span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Have a project in mind? Let's talk about it
+            Have a project in mind? Let&apos;s talk about it
           </p>
         </motion.div>
 
@@ -100,7 +100,7 @@ export default function Contact() {
                 Connect With Us
               </h3>
               <p className="text-gray-400 leading-relaxed mb-8">
-                We're always excited to discuss new projects and opportunities.
+                We&apos;re always excited to discuss new projects and opportunities.
                 Reach out through the form or connect with us on social media.
               </p>
             </div>
@@ -171,7 +171,7 @@ export default function Contact() {
                 transition={{ delay: 0.4 }}
                 className="text-2xl md:text-3xl font-bold text-white mb-3"
               >
-                Let's bring your{" "}
+                Let&apos;s bring your{" "}
                 <span className="bg-gradient-to-r from-[#7B2FF7] to-[#00C6FF] bg-clip-text text-transparent">
                   idea to life
                 </span>

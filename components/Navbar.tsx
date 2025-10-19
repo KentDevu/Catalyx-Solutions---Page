@@ -5,6 +5,15 @@ import { motion } from "framer-motion";
 import { Menu, X, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const NAV_LINKS = [
+  { name: "Home", href: "#home" },
+  { name: "Projects", href: "#projects" },
+  { name: "Team", href: "#team" },
+  { name: "Mission", href: "#mission" },
+  { name: "Reviews", href: "#reviews" },
+  { name: "Contact", href: "#contact" },
+];
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -17,20 +26,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Projects", href: "#projects" },
-    { name: "Team", href: "#team" },
-    { name: "Mission", href: "#mission" },
-    { name: "Reviews", href: "#reviews" },
-    { name: "Contact", href: "#contact" },
-  ];
-
   const [active, setActive] = useState<string>("Home");
 
   useEffect(() => {
     // Build mapping of elements (by id or data-nav) to nav link names
-    const sections = navLinks
+    const sections = NAV_LINKS
       .map((l) => {
         const key = l.href.replace('#', '');
         const elById = document.getElementById(key);
@@ -61,7 +61,7 @@ export default function Navbar() {
       { root: null, rootMargin: '-40% 0px -40% 0px', threshold: [0.25, 0.5, 0.75] }
     );
 
-    sections.forEach((s) => observer.observe(s.el));
+  sections.forEach((s) => observer.observe(s.el));
 
     // also expose an updater for immediate checks (used when opening mobile menu)
     (window as any).__updateActiveSection = () => {
@@ -113,7 +113,7 @@ export default function Navbar() {
           </motion.div>
 
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link, index) => (
+            {NAV_LINKS.map((link, index) => (
               <motion.a
                 key={link.name}
                 href={link.href}
@@ -161,7 +161,7 @@ export default function Navbar() {
           className="md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-white/10"
         >
           <div className="px-4 py-6 space-y-4">
-            {navLinks.map((link) => (
+            {NAV_LINKS.map((link) => (
               <motion.a
                 key={link.name}
                 href={link.href}
