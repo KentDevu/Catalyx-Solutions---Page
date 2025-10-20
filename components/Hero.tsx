@@ -7,6 +7,7 @@ import LottieAnimation from "./LottieAnimation";
 // import animationData from "../assets/Programming Computer-animation.json";
 // import animationData from "../assets/Website-animation.json";
 import animationData from "../assets/rocket-animation-v2.json";
+import LiquidEther from "./LiquidEther";
 
 export default function Hero() {
   return (
@@ -16,15 +17,23 @@ export default function Hero() {
       style={{ minHeight: 'calc(100vh - 5rem)' }}
     >
       <div className="absolute inset-0 -z-10 flex items-center justify-center overflow-hidden">
-        <div className="w-[1000px] h-[1000px] max-w-none">
-          <LottieAnimation
-        animationData={animationData}
-        loop={true}
-        autoplay={true}
-        className="w-full h-full"
-        style={{ width: "100%", height: "100%" }}
-          />
-        </div>
+        <LiquidEther
+          colors={['#00C6FF', '#7B2FF7', '#ffffff']}
+          mouseForce={100}
+          cursorSize={30}
+          isViscous={false} 
+          viscous={30}
+          iterationsViscous={32}
+          iterationsPoisson={32}
+          resolution={0.5}
+          isBounce={false}
+          autoDemo={true}
+          autoSpeed={0.5}
+          autoIntensity={2.2}
+          takeoverDuration={0.25}
+          autoResumeDelay={3000}
+          autoRampDuration={0.6}
+        />
       </div>
 
       <div className="site-container relative z-10">
