@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import DecryptedText from "./DecryptedText";
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, Link } from "lucide-react";
 import Particles from "./Particles";
 import Image from "next/image";
 
@@ -19,7 +19,7 @@ const team = [
     socials: { 
       linkedin: "https://www.linkedin.com/in/eunille-jan-019416276", 
       github: "https://github.com/eunille",
-      portfolio: "https://eunile-jan-apo.vercel.app/"
+      portfolio: "https://portfolio-2025-wine-eta.vercel.app/"
     },
   },
   {
@@ -182,7 +182,7 @@ export default function TeamSection() {
                         rel="noopener noreferrer"
                         className="p-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300 group/icon"
                       >
-                        <Mail className="w-4 h-4 text-gray-400 group-hover/icon:text-[#00C6FF] transition-colors" />
+                        <Link className="w-4 h-4 text-gray-400 group-hover/icon:text-[#00C6FF] transition-colors" />
                       </a>
                     )}
                   </div>

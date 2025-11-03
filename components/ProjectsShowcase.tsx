@@ -8,22 +8,46 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, Globe, Smartphone, Shield, Zap } from "lucide-react";
 
-const projects = {
+interface Project {
+
+title: string;
+
+category: string;
+
+description: string;
+
+tech: string[];
+
+icon: React.ComponentType<any>;
+
+gradient: string;
+
+url?: string;
+
+github?: string;
+
+}
+
+const projects: Record<string, Project[]> = {
   all: [
     {
-      title: "FinTech Dashboard",
+      title: "Fitup",
       category: "Web Application",
-      description: "Real-time financial analytics platform with AI-powered insights and predictive modeling for enterprise clients.",
-      tech: ["React", "Node.js", "TensorFlow", "PostgreSQL"],
+      description: "A training program generator that customizes workouts based on user goals and preferences.",
+      tech: ["React", "Node.js", "AI", "PostgreSQL"],
       icon: Globe,
+      url: "https://fit-up-dun.vercel.app/",
+      github: "https://github.com/KentDevu/FitUp",
       gradient: "from-blue-500 to-cyan-500",
     },
     {
-      title: "HealthHub Mobile",
-      category: "Mobile App",
-      description: "Comprehensive health tracking app with telemedicine integration and personalized AI recommendations.",
-      tech: ["React Native", "Firebase", "HealthKit", "ML Kit"],
-      icon: Smartphone,
+      title: "Note alone",
+      category: "Web Application",
+      description: "A note-taking app that uses AI to generate quizzes based on your notes.",
+      tech: ["React", "Node.js", "AI", "PostgreSQL"],
+      icon: Globe,
+      url: "https://note-alone.vercel.app/",
+      github: "https://github.com/",
       gradient: "from-purple-500 to-pink-500",
     },
     {
@@ -35,11 +59,13 @@ const projects = {
       gradient: "from-orange-500 to-red-500",
     },
     {
-      title: "CyberGuard Platform",
+      title: "Auralis",
       category: "Security Suite",
-      description: "Advanced threat detection and response system protecting 500+ enterprise clients worldwide.",
-      tech: ["Go", "Kubernetes", "AI/ML", "Redis"],
+      description: "Automated email phishing detection and response platform utilizing AI to protect corporate communications.",
+      tech: ["n8n", "virustotal", "next", "CTI"],
       icon: Shield,
+      url: "https://phishing-detection-dashboard.vercel.app",
+      github: "https://github.com/KentDevu/PhishingDetection-Dashboard.git",
       gradient: "from-green-500 to-emerald-500",
     },
   ],
@@ -73,11 +99,13 @@ const projects = {
   ],
   security: [
     {
-      title: "CyberGuard Platform",
+      title: "Auralis",
       category: "Security Suite",
-      description: "Advanced threat detection and response system protecting 500+ enterprise clients worldwide.",
-      tech: ["Go", "Kubernetes", "AI/ML", "Redis"],
+      description: "Automated email phishing detection and response platform utilizing AI to protect corporate communications.",
+      tech: ["n8n", "virustotal", "next", "CTI"],
       icon: Shield,
+      url: "https://phishing-detection-dashboard.vercel.app",
+      github: "https://github.com/KentDevu/PhishingDetection-Dashboard.git",
       gradient: "from-green-500 to-emerald-500",
     },
   ],
@@ -188,20 +216,30 @@ export default function ProjectsShowcase() {
 
                         {/* Actions */}
                         <div className="flex gap-2">
+                          {project.url && (
                           <Button
+                            asChild
                             size="sm"
                             className="bg-gradient-to-r from-[#00C6FF] to-[#7B2FF7] hover:shadow-lg hover:shadow-[#00C6FF]/50 transition-all duration-300 flex-1"
                           >
+                            <a href={project.url} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="w-4 h-4 mr-2" />
                             View Project
+                            </a>
                           </Button>
+                          )}
+                          {project.github && (
                           <Button
+                            asChild
                             size="sm"
                             variant="outline"
                             className="bg-white/5 border-white/10 hover:bg-white/10"
                           >
+                            <a href={project.github} target="_blank" rel="noopener noreferrer">
                             <Github className="w-4 h-4" />
+                            </a>
                           </Button>
+                          )}
                         </div>
                       </div>
                     </Card>
