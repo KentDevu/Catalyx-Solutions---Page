@@ -29,63 +29,48 @@ export default function Navbar() {
   const [active, setActive] = useState<string>("Home");
 
   useEffect(() => {
-    // Build mapping of elements (by id or data-nav) to nav link names
-    const sections = NAV_LINKS
-      .map((l) => {
-        const key = l.href.replace('#', '');
-        const elById = document.getElementById(key);
-        const elByData = document.querySelector<HTMLElement>(`[data-nav="${key}"]`);
-        const el = elById || elByData || null;
-        return el ? { el, name: l.name } : null;
-      })
-      .filter(Boolean) as { el: HTMLElement; name: string }[];
-
-    if (sections.length === 0) return;
-
-    // IntersectionObserver marks sections when roughly centered in viewport
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // pick the entry with the largest intersectionRatio that isIntersecting
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
-          visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-          const match = sections.find((s) => s.el === visible[0].target);
-          if (match) setActive(match.name);
-        } else {
-          // if none intersecting, fallback to Home
-          // (this happens when scrolled above first section)
-          const y = window.scrollY;
-          if (y <= 50) setActive('Home');
-        }
-      },
-      { root: null, rootMargin: '-40% 0px -40% 0px', threshold: [0.25, 0.5, 0.75] }
-    );
-
-  sections.forEach((s) => observer.observe(s.el));
-
-    // also expose an updater for immediate checks (used when opening mobile menu)
-    (window as any).__updateActiveSection = () => {
-      const middle = window.scrollY + window.innerHeight / 2;
-      for (const sec of sections) {
-        const rect = sec.el.getBoundingClientRect();
-        const top = window.scrollY + rect.top;
-        const bottom = top + rect.height;
-        if (middle >= top && middle <= bottom) {
-          setActive(sec.name);
-          return;
+    const updateActive = () => {
+      const scrollPosition = window.scrollY + 100; // Offset for navbar height
+      
+      // Check each section from top to bottom
+      for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
+        const section = document.getElementById(NAV_LINKS[i].href.replace('#', ''));
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          
+          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            setActive(NAV_LINKS[i].name);
+            return;
+          }
         }
       }
-      setActive('Home');
+      
+      // If at top, set to Home
+      if (window.scrollY < 100) {
+        setActive('Home');
+      }
     };
 
-    // initial run
-    (window as any).__updateActiveSection();
+    // Update on scroll with debounce
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActive();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
 
+    // Initial check
+    updateActive();
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    
     return () => {
-      observer.disconnect();
-      try {
-        delete (window as any).__updateActiveSection;
-      } catch {}
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

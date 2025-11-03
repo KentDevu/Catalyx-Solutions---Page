@@ -1,27 +1,28 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Mission from "@/components/Mission";
-import Services from "@/components/Services";
-import Projects from "@/components/Projects";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import Team from "@/components/Team";
-import Reviews from "@/components/Reviews";
+import FeaturesGrid from "@/components/FeaturesGrid";
+import StatsSection from "@/components/StatsSection";
+import MissionSection from "@/components/MissionSection";
+import ProjectsShowcase from "@/components/ProjectsShowcase";
+import TeamSection from "@/components/TeamSection";
+import ReviewsSection from "@/components/ReviewsSection";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import DotGrid from "@/components/DotGrid";
+import StellarBackground from "@/components/StellarBackground";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black relative overflow-hidden">
-      <div className="relative z-10">
+    <main className="min-h-screen bg-black relative">
+      <StellarBackground />
+      <div className="relative" style={{ zIndex: 100 }}>
         <Navbar />
         <Hero />
-        <Services />
-        <WhyChooseUs />
-        <Projects />
-        <Team />
-        <Mission />
-        <Reviews />
+        <FeaturesGrid />
+        <StatsSection />
+        <ProjectsShowcase />
+        <TeamSection />
+        <MissionSection />
+        <ReviewsSection />
         <Contact />
         <Footer />
       </div>

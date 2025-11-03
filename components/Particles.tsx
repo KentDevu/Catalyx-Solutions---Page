@@ -110,11 +110,13 @@ type ParticlesProps = {
 	cameraDistance?: number;
 	disableRotation?: boolean;
 	className?: string;
+	scrollPosition?: { x: number; y: number };
+	scrollPositionRef?: React.RefObject<{ x: number; y: number }>;
 };
 
 const Particles = ({
 	particleCount = 200,
-	particleSpread = 10,
+	particleSpread = 5,
 	speed = 0.1,
 	particleColors,
 	moveParticlesOnHover = false,
@@ -122,22 +124,38 @@ const Particles = ({
 	alphaParticles = false,
 	particleBaseSize = 100,
 	sizeRandomness = 1,
-	cameraDistance = 20,
+	cameraDistance = 5,
 	disableRotation = false,
-	className
+	className,
+	scrollPosition,
+	scrollPositionRef
 }: ParticlesProps) => {
 	const containerRef = useRef<HTMLDivElement | null>(null);
 	const mouseRef = useRef({ x: 0, y: 0 });
+	
+	// Use the ref if provided, otherwise fallback to scrollPosition prop
+	const scrollPosToUse = scrollPositionRef || { current: scrollPosition };
 
 	useEffect(() => {
 		const container = containerRef.current;
 		if (!container) return;
 
+		// Clear any existing canvas to prevent multiple WebGL contexts
+		while (container.firstChild) {
+			container.removeChild(container.firstChild);
+		}
+
 		const renderer = new Renderer({ depth: false, alpha: true });
 		// ogl expects a WebGL2-like context attached to its renderer; cast to any to avoid TS errors
 		const gl = renderer.gl as any;
-		container.appendChild(gl.canvas as HTMLCanvasElement);
+		const canvas = gl.canvas as HTMLCanvasElement;
+		canvas.style.width = '100%';
+		canvas.style.height = '100%';
+		canvas.style.display = 'block';
+		container.appendChild(canvas);
 		gl.clearColor(0, 0, 0, 0);
+		
+		console.log('[Particles] Canvas created:', canvas.width, 'x', canvas.height);
 
 		const camera = new Camera(gl, { fov: 15 });
 		camera.position.set(0, 0, cameraDistance);
@@ -233,12 +251,14 @@ const Particles = ({
 		let animationFrameId = 0;
 		let lastTime = performance.now();
 		let elapsed = 0;
+		let frameCount = 0;
 
 		const update = (t: number) => {
 			animationFrameId = requestAnimationFrame(update);
 			const delta = t - lastTime;
 			lastTime = t;
 			elapsed += delta * speed;
+			frameCount++;
 
 			program.uniforms.uTime.value = elapsed * 0.001;
 
@@ -253,18 +273,31 @@ const Particles = ({
 			if (moveParticlesOnHover) {
 				particles.position.x = -mouseRef.current.x * particleHoverFactor;
 				particles.position.y = -mouseRef.current.y * particleHoverFactor;
+			} else if (scrollPosToUse.current) {
+				// Use scroll position for circular motion - read directly from ref
+				particles.position.x = scrollPosToUse.current.x;
+				particles.position.y = scrollPosToUse.current.y;
+				
+				// Debug log every 60 frames
+				if (frameCount % 60 === 0) {
+					console.log('[Particles] Applying position:', { 
+						x: scrollPosToUse.current.x.toFixed(3), 
+						y: scrollPosToUse.current.y.toFixed(3),
+						particlePosX: particles.position.x.toFixed(3),
+						particlePosY: particles.position.y.toFixed(3)
+					});
+				}
 			} else {
 				particles.position.x = 0;
 				particles.position.y = 0;
 			}
 
 			if (!disableRotation) {
+				// Subtle rotation for visual interest
 				// @ts-ignore
-				particles.rotation.x = Math.sin(elapsed * 0.0002) * 0.1;
+				particles.rotation.x = Math.sin(elapsed * 0.0001) * 0.05;
 				// @ts-ignore
-				particles.rotation.y = Math.cos(elapsed * 0.0005) * 0.15;
-				// @ts-ignore
-				particles.rotation.z += 0.01 * speed;
+				particles.rotation.y = Math.cos(elapsed * 0.0002) * 0.05;
 			}
 
 			renderer.render({ scene: particles, camera });
@@ -274,29 +307,26 @@ const Particles = ({
 
 		return () => {
 			window.removeEventListener('resize', resize);
-					if (moveParticlesOnHover) {
-						window.removeEventListener('mousemove', handleMouseMove as any);
-						window.removeEventListener('mousedown', handleMouseDown as any);
-						window.removeEventListener('mouseup', handleMouseUp as any);
-					}
+			if (moveParticlesOnHover) {
+				window.removeEventListener('mousemove', handleMouseMove as any);
+				window.removeEventListener('mousedown', handleMouseDown as any);
+				window.removeEventListener('mouseup', handleMouseUp as any);
+			}
 			cancelAnimationFrame(animationFrameId);
+			
+			// Clean up WebGL context
+			const loseContext = gl.getExtension('WEBGL_lose_context');
+			if (loseContext) {
+				loseContext.loseContext();
+			}
+			
+			// Remove canvas from DOM
 			if (container.contains(gl.canvas as HTMLCanvasElement)) {
 				container.removeChild(gl.canvas as HTMLCanvasElement);
 			}
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		particleCount,
-		particleSpread,
-		speed,
-		moveParticlesOnHover,
-		particleHoverFactor,
-		alphaParticles,
-		particleBaseSize,
-		sizeRandomness,
-		cameraDistance,
-		disableRotation
-	]);
+	}, []);
 
 	return <div ref={containerRef} className={`particles-container ${className ?? ''}`} />;
 };

@@ -16,10 +16,12 @@ export default function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="py-32 relative overflow-hidden bg-black"
+      className="py-32 relative overflow-hidden"
+      style={{ backgroundColor: 'transparent' }}
     >
       <div className="absolute top-1/3 left-0 w-96 h-96 bg-[#7B2FF7]/20 rounded-full blur-[120px]"></div>
       <div className="absolute bottom-1/3 right-0 w-96 h-96 bg-[#00C6FF]/20 rounded-full blur-[120px]"></div>
+      <div className="absolute inset-0 bg-black/60 -z-10"></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
